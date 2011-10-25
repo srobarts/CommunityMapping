@@ -13,10 +13,16 @@
       
       var vancouver = new google.maps.LatLng(49.262 , -123.113);
 
-      map = new google.maps.Map(document.getElementById('map_canvas'), {
-        center: vancouver,
+      var myOptions = {
         zoom: 13,
+        center: vancouver,
         mapTypeId: 'roadmap'
+      }
+
+      map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+
+      google.maps.event.addListener(map, 'click', function(event) {
+        placeMarker(event.latLng);
       });
 
       var layer = new google.maps.FusionTablesLayer({
@@ -33,8 +39,18 @@
       }]
 
       layer.setMap(map);
-
     }
+
+    function placeMarker(location) {
+      var marker = new google.maps.Marker({
+      position: location, 
+      draggable:true,
+      animation: google.maps.Animation.DROP,
+      url: 'http://maphack.blinklab.ca/update.html',
+      map: map
+    });
+
+}
 
   </script>
 </head>
